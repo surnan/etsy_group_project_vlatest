@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsOneThunk } from "../../redux/product";
 import { getReviewsThunk } from "../../redux/review";
+import ReviewCard from "../ReviewCard/ReviewCard";
 import './ProductDetails.css';
 
 export default function ProductDetails() {
@@ -17,15 +18,19 @@ export default function ProductDetails() {
     const [deleteReviewChecker, setDeleteReviewChecker] = useState(false);
 
     const product = useSelector(state => state.product.single);
+    let reviews = useSelector((state) => state.allReviews);
+    const productReviews = reviews ? reviews.find(review => {return review.productId === product.id}) : undefined;
+    console.log('The reviews for the product are ', productReviews);
 
     useEffect(() => {
         dispatch(getProductsOneThunk(parseInt(productId)));
-        dispatch(getReviewsThunk(parseInt(productId)))
+        dispatch(getReviewsThunk(productId))
             .then(() => setShowReviews(true))
-            .then(() => setDeleteReviewChecker(false));
-        if (!product)
-            return navigate('/404');
-    }, [dispatch, productId, reviewChecker, deleteReviewChecker]);
+            .then(() => setDeleteReviewChecker(false))
+            .then(() => {if (!product)
+                return navigate('/404');});
+       
+    }, [dispatch, reviewChecker, deleteReviewChecker, productId]);
 
     useEffect(() => {
         // Set the first image as the main image when the product is loaded
@@ -63,6 +68,11 @@ export default function ProductDetails() {
                 <p>${product.price}</p>
                 <button>Add to Cart</button>
             </div>
+            {showReviews ? productReviews?.map (rev => {
+                console.log('My review, ', rev);
+                <ReviewCard rev = {rev}/>
+            }): ''}
         </div>
+       
     )
 }
