@@ -103,22 +103,16 @@ function reviewReducer(state = initialState, action) {
         }
 
         case EDIT_REVIEW: {
-            newState = { ...state };
-            const reviewId = action.payload.id;
-
-            const newAllReviews = [];
-
-            for (let i = 0; i < newState.allReviews.length; i++) {
-                let currentReview = newState.allReviews[i];
-                if (currentReview.id === reviewId) {
-                    newAllReviews.push(action.payload);
-                } else
-                    newAllReviews.push(currentReview);
-            }
-
-            newState.allReviews = newAllReviews;
-            newState.byId = { ...newState.byId, [reviewId]: action.payload };
-
+            newState = {...state};
+            //Add new spot to byId 
+            const review = action.payload;
+            const updatedReviews = newState.allReviews.filter(rev => {
+              return rev.id !== review.id;
+            });
+      
+            updatedReviews.push(review);
+            newState.allReviews = updatedReviews;
+         
             return newState;
         }
 

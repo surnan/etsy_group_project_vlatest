@@ -7,11 +7,11 @@ import './AddReviewModal.css';
 const UpdateReview = () => {
 
     let {reviewId} = useParams();
-    let spot = useSelector((state) => state.reviews.byId[reviewId]);
+    let rev = useSelector((state) => state.review.allReviews[`${reviewId}`]);
     const dispatch = useDispatch();
    
-    const [rating, setRating] = useState(spot.review);
-    const [stars, setStars] = useState(spot.stars);
+    const [rating, setRating] = useState(rev.review);
+    const [stars, setStars] = useState(rev.stars);
     const navigate = useNavigate();
 
     reviewId = parseInt(reviewId);
