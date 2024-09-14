@@ -30,17 +30,34 @@ const AddReviewForm = ()=> {
         }
     }, [review, stars])
   
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
        
-        const form = {
-           stars,
-           review
-        }
+    //     const form = {
+    //        stars,
+    //        review
+    //     }
         
-        console.log('The form is ', form)
-        dispatch(addReviewThunk(form, productId, userId));
-    }
+    //     console.log('The form is ', form)
+    //     dispatch(addReviewThunk(form, productId, userId));
+    // }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        const form = {
+            stars,
+            review
+        };
+        
+        try {
+            await dispatch(addReviewThunk(form, productId, userId));
+            navigate(`/products/${productId}`); // Navigate back to the product details page
+        } catch (error) {
+            console.error("Error submitting review:", error);
+        }
+    };
+    
   
     return (
         <div className = "reviewsModalContainer">
