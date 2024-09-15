@@ -1,0 +1,63 @@
+.confirm-delete-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px
+}
+
+.confirm-delete-container h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: #333;
+}
+
+.confirm-delete-container span {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 14px;
+    margin: 0;
+    text-align: left;
+}
+
+.delete-buttons-container {
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.yes-button-modal {
+    width: 100%;
+    background-color: #f1641e;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.yes-button-modal:hover {
+    background-color: #d05619;
+}
+
+.no-button-modal {
+    background-color: #00A699;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.no-button-modal:hover {
+    background-color: #008F81;
+}

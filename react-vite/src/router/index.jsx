@@ -9,6 +9,9 @@ import UpdateReview from '../components/Reviews/UpdateReview';
 import DeleteReview from '../components/Reviews/DeleteReview';
 import Favorites from '../components/Favorites/Favorite';
 import Page404 from '../components/404';
+import CreateProduct from '../components/CreateProduct/CreateProduct';
+import MyListings from '../components/MyListings';
+import UpdateProduct from '../components/UpdateProduct/UpdateProduct';
 
 
 export const router = createBrowserRouter([
@@ -34,12 +37,18 @@ export const router = createBrowserRouter([
       {
         path: '/reviews/:reviewId/update',
         element: <UpdateReview/>,
-        
       },
-
       {
         path: '/favorites',
         element: <Favorites />
+      },
+      {
+        path: '/user/listings',
+        element: <MyListings />
+      },
+      {
+        path: '/user/listings/:productId',
+        element: <UpdateProduct />
       },
       {
         path: "login",
@@ -48,6 +57,10 @@ export const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignupFormPage />,
+      },
+      {
+        path: '/products/new',
+        element: <CreateProduct />
       },
       {
         path: '/404',

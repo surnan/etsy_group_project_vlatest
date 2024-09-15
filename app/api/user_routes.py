@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User
+from app.models import User, Product
 
 user_routes = Blueprint('users', __name__)
 
@@ -24,3 +24,12 @@ def user(id):
     user = User.query.get(id)
     return jsonify(user.to_dict())
 
+@user_routes.route('/<int:userId>/listings', methods=['GET'])
+def get_products_owned_by_user(userId):
+    user = User.query.get(userId)
+    
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    products = user.products  # Assuming 'products' is a relationship in the User model
+    return jsonify([product.to_dict() for product in products])

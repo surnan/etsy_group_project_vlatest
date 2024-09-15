@@ -46,7 +46,7 @@ function ProfileButton({ user }) {
   };
 
   const goToManageSpots = () => {
-    navigate('/spots/current');
+    navigate('/user/listings');
     closeMenu();
   };
 
@@ -74,6 +74,8 @@ function ProfileButton({ user }) {
             <li>Hello, {user.username}</li>
             <div className='divider-horizontal'></div>
             <li onClick={goToManageSpots}>Manage Listings</li>
+            <div className='divider-horizontal'></div>
+            <li onClick={() => navigate('/products/new')}>Create Listing</li>
             <div className='divider-horizontal'></div>
             <div>
               <button onClick={logout}>Logout</button>

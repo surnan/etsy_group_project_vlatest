@@ -100,13 +100,15 @@ export default function ProductDetails() {
             <div className="product-main-container">
                 <div className="product-image-gallery">
                     {product.product_images?.map((image, index) => (
-                        <img
+                        image.image_url !== '' && (
+                            <img
                             key={index}
                             src={image.image_url}
                             alt={product.name}
                             onClick={() => handleImageClick(image.image_url)} // Change main image on click
                             className={image.image_url === mainImage ? 'active-thumbnail' : ''}
                         />
+                        )
                     ))}
                 </div>
                 <div className="product-main-image">
@@ -116,6 +118,15 @@ export default function ProductDetails() {
                     <h1>{product.name}</h1>
                     <h2>${product.price}</h2>
                     <p>{product.description}</p>
+                    {isSeller ? (
+                        <h2>You are selling this product.</h2>
+                    ) : (
+                        isFavorite ? (
+                            <button onClick={handleDeleteFavorite}>Delete Favorite</button>
+                        ) : (
+                            <button onClick={handleAddFavorite}>Add to Favorites</button>
+                        )
+                    )}
                     <button>Add to Cart</button>
                 </div>
             </div>
@@ -123,9 +134,15 @@ export default function ProductDetails() {
                 <Link to={`/reviews/${productId}/add`}><button>Add Review</button></Link>
             </div>
             <div className="reviews-container">
-                <h2>{`${productReviews.length}`} <span>reviews</span></h2>
-                {productReviews.length > 0 ? (
-                    productReviews.map((review, index) => (
+                {
+                    product.reviews?.length > 0 ? (
+                        <h2>{`${product.reviews.length}`} <span>reviews</span></h2>
+                    ) : (
+                        <h2>No reviews yet</h2>
+                    )
+                }
+                {product.reviews.length > 0 ? (
+                    product.reviews.map((review, index) => (
                         <React.Fragment key={index}>
                             <ReviewCard review={review} />
                             <div className="horizontal-divider"></div>
@@ -134,19 +151,6 @@ export default function ProductDetails() {
                 ) : (
                     <p>No reviews yet</p>
                 )}
-            </div>
-            <div className="product-details">
-                <h1>{product.name}</h1>
-                <p>{product.description}</p>
-                <p>${product.price}</p>
-                {!isSeller && ( // Only show these buttons if the user is not the seller
-                    isFavorite ? (
-                        <button onClick={handleDeleteFavorite}>Delete Favorite</button>
-                    ) : (
-                        <button onClick={handleAddFavorite}>Add to Favorites</button>
-                    )
-                )}
-                <button>Add to Cart</button>
             </div>
         </>
     );

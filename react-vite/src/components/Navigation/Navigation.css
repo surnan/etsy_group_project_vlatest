@@ -104,7 +104,7 @@
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-weight: 700;
   font-size: 24px;
-  color: #f1641e;
+  color: v;
   /* Etsy's primary color */
   transition: color 0.3s ease;
 }
