@@ -6,14 +6,14 @@ const LOAD_PRODUCTS_ALL = "products/loadProductsAll"
 const LOAD_PRODUCTS_ONE = "products/loadProductsOne"
 const LOAD_PRODUCTS_OWNED = "products/loadProductsOwned"
 const UPDATE_PRODUCT = "products/updateProductOne"
-const GET_REVIEWS = 'reviews/getReviews';
+// const GET_REVIEWS = 'reviews/getReviews';
 
 
-// Actions
-const getReviews = (productId) => ({
-    type: GET_REVIEWS,
-    payload: productId
-});
+// // Actions
+// const getReviews = (productId) => ({
+//     type: GET_REVIEWS,
+//     payload: productId
+// });
 
 const addProduct = (data) => ({
     type: ADD_PRODUCT,
@@ -52,13 +52,13 @@ const updateProduct = (data) => ({
 })
 
 //Thunks
-export const getProductReviewsThunk = (productId) => async (dispatch) => {
-    const response = await fetch(`/api/products/${productId}/reviews`);
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(getReviews(data));
-    }
-};
+// export const getProductReviewsThunk = (productId) => async (dispatch) => {
+//     const response = await fetch(`/api/reviews/${productId}`);
+//     if (response.ok) {
+//         const data = await response.json();
+//         dispatch(getReviews(data));
+//     }
+// };
 
 export const addProductThunk = (product) => async (dispatch) => {
     const { body, imageURLs } = product;
@@ -201,11 +201,11 @@ function productReducer(state = initialState, action) {
             return newState;
         }
 
-        case GET_REVIEWS: {
-            let newState = { ...state }
-            newState.single.reviews = action.payload;
-            return newState;
-        }
+        // case GET_REVIEWS: {
+        //     let newState = { ...state }
+        //     newState.single.reviews = action.payload;
+        //     return newState;
+        // }
 
         case DELETE_PRODUCT: {
             let newState = { ...state }

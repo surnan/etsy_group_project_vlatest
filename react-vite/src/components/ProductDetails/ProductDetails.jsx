@@ -24,10 +24,6 @@ export default function ProductDetails() {
     const reviewChecker = false;
 
     // Fetch product and reviews when component mounts
-    useEffect(() => {
-        dispatch(getProductsOneThunk(parseInt(productId)))
-            .then(() => setDeleteReviewChecker(false));
-    }, [dispatch, productId, deleteReviewChecker]);
 
     const product = useSelector(state => state.product.single);
 
@@ -43,13 +39,13 @@ export default function ProductDetails() {
     const isSeller = sessionUser?.id === product?.sellerId;
 
     useEffect(() => {
-        dispatch(getProductsOneThunk(parseInt(productId)));
-        dispatch(getReviewsThunk(parseInt(productId)))
-            .then(() => setShowReviews(true))
-            .then(() => setDeleteReviewChecker(false))
-            .then(() => {
+        dispatch(getProductsOneThunk(parseInt(productId)))
+        .then(() => dispatch(getReviewsThunk(parseInt(productId))))
+        .then(() => setShowReviews(true))
+        .then(() => setDeleteReviewChecker(false))
+        .then(() => {
                 if (!product) return navigate('/404');
-            });
+        });
         dispatch(getFavoritesAllThunk());
     }, [dispatch, productId, reviewChecker, deleteReviewChecker]);
 
@@ -127,9 +123,9 @@ export default function ProductDetails() {
                 <Link to={`/reviews/${productId}/add`}><button>Add Review</button></Link>
             </div>
             <div className="reviews-container">
-                <h2>{`${product.reviews.length}`} <span>reviews</span></h2>
-                {product.reviews.length > 0 ? (
-                    product.reviews.map((review, index) => (
+                <h2>{`${productReviews.length}`} <span>reviews</span></h2>
+                {productReviews.length > 0 ? (
+                    productReviews.map((review, index) => (
                         <React.Fragment key={index}>
                             <ReviewCard review={review} />
                             <div className="horizontal-divider"></div>

@@ -34,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: '/reviews/:reviewId/update',
         element: <UpdateReview/>,
+        
+      },
+
+      {
         path: '/favorites',
         element: <Favorites />
       },

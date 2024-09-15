@@ -39,6 +39,7 @@ export const getReviewsThunk = (productId) => async (dispatch) => {
         const reviews = await response.json();
         console.log(reviews)
         dispatch(getReviews(reviews));
+        return reviews;
     }
 };
 
@@ -48,6 +49,7 @@ export const getReviewThunk = (reviewId) => async (dispatch) => {
     if (response.ok) {
         const review = await response.json();
         dispatch(getReview(review));
+        return review;
     }
 };
 
@@ -106,13 +108,14 @@ export const editReviewThunk = (review) => async (dispatch) => {
 
 
 //Reducer
-const initialState = {};
+const initialState = {allReviews: [], byId: {}};
 
 function reviewReducer(state = initialState, action) {
     let newState;
 
     switch (action.type) {
         case GET_REVIEWS: {
+            console.log('Yayayayayayayayayayay', action.payload)
             newState = { ...state };
             newState.allReviews = action.payload;
             for (let review of newState.allReviews) {
@@ -130,7 +133,6 @@ function reviewReducer(state = initialState, action) {
         case ADD_REVIEW: {
             newState = { ...state };
             newState.allReviews = {...action.payload};
-            console.log('Mary has a ', newState, ' lamb')
             newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
             return newState;
         }
@@ -138,7 +140,7 @@ function reviewReducer(state = initialState, action) {
         case EDIT_REVIEW: {
             newState = { ...state };
             const reviewId = action.payload.id;
-
+           
             const newAllReviews = [];
             console.log('The state is....... ', newState)
 
