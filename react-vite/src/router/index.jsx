@@ -12,6 +12,8 @@ import Page404 from '../components/404';
 import CreateProduct from '../components/CreateProduct/CreateProduct';
 import MyListings from '../components/MyListings';
 import UpdateProduct from '../components/UpdateProduct/UpdateProduct';
+import SignupFormModal from '../components/SignupFormModal';
+import LoginFormModal from '../components/LoginFormModal';
 
 
 export const router = createBrowserRouter([
@@ -52,11 +54,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <LoginFormPage />,
+        element: <LoginFormModal />,
       },
       {
         path: "signup",
-        element: <SignupFormPage />,
+        element: <SignupFormModal />,
       },
       {
         path: '/products/new',

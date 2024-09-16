@@ -17,7 +17,7 @@ const Favorites = () => {
     }, [dispatch]);
 
     const favorites = useSelector(state => state.favorites.allFavorites);
-    console.log("favorites", favorites)
+    // console.log("favorites", favorites)
 
     if (!favorites.length) {
         return <p>You have no favorite products.</p>;
@@ -29,7 +29,7 @@ const Favorites = () => {
         navigate(`/products/${product.id}`);  // Navigate to product details page
     };
 
-    console.log("favorites[0].productId", favorites[0].productId)
+    // console.log("favorites[0].productId", favorites[0].productId)
     return (
         <div className="favorites-container">
             {favorites.map(favorite => (

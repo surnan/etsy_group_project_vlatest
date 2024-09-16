@@ -16,11 +16,23 @@ function SignupFormModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Reset previous errors
+    setErrors({});
+
+    // Check for password length
+    if (password.length < 6) {
+      return setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: "Password must be at least 6 characters long",
+      }));
+    }
+
+    // Check if password and confirmPassword match
     if (password !== confirmPassword) {
-      return setErrors({
-        confirmPassword:
-          "Confirm Password field must be the same as the Password field",
-      });
+      return setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "Confirm Password field must be the same as the Password field",
+      }));
     }
 
     const serverResponse = await dispatch(

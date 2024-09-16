@@ -3,6 +3,8 @@ import './ProductDetails.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import EditReviewModal from '../EditReviewModal';
 
 function productRating(stars) {
     const result = [];
@@ -19,22 +21,8 @@ async function getUser(userId) {
     return result;
 }
 
-export default function ReviewCard({ review }) {
-
-    const navigate = useNavigate(); // Add this line
-    
-
-    function handleUpdateBtn(rev) {
-        navigate(`/reviews/${rev.id}/update`);        
-    }
-
-    function handleDeleteBtn(rev) {
-        navigate(`/reviews/${rev.id}/delete`);        
-    }
-    
-
-
-    const [reviewOwner, setReviewOwner] = useState(null); // State to hold the user data
+export default function ReviewCard({ review, setReviewCardChecker }) {
+    const [reviewOwner, setReviewOwner] = useState(null);
 
     useEffect(() => {
         async function fetchUser() {
@@ -43,7 +31,7 @@ export default function ReviewCard({ review }) {
         }
 
         fetchUser();
-    }, [review.userId]); // Only run when the review.userId changes
+    }, [review.userId, setReviewCardChecker]);
 
     if (!reviewOwner) {
         return (
@@ -62,6 +50,11 @@ export default function ReviewCard({ review }) {
 
     const rating = productRating(review.stars);
 
+    const onCloseModal = () => {
+        setReviewChecker(prev => !prev);
+        setReviewCardChecker(prev => !prev);
+    }
+
     return (
         <div className="review-card">
             <div className="review-card__header">
@@ -71,17 +64,15 @@ export default function ReviewCard({ review }) {
             </div>
             <div className="review-card__content">
                 <p>{review.review}</p>
-                {/* Display the username of the review owner */}
                 <span className="review-author">{reviewOwner.username}</span>
             </div>
-            <br />
-            <br />
             <div className="reviewButton-hflex">
-                <button
-                    className="reviewBtn updateBtn"
-                    onClick={() => handleUpdateBtn(review)}
-                >
-                    update
+                <button className="reviewBtn updateBtn">
+                    <OpenModalMenuItem
+                        itemText="Update"
+                        modalComponent={<EditReviewModal review={review} setReviewChecker={setReviewCardChecker}/>}
+                        onModalClose={async () => await onCloseModal}
+                    />
                 </button>
                 <button
                     className="reviewBtn deleteBtn"
@@ -89,7 +80,6 @@ export default function ReviewCard({ review }) {
                 >
                     Delete
                 </button>
-               
             </div>
         </div>
     );

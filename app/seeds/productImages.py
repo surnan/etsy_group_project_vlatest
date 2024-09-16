@@ -84,6 +84,8 @@ def seed_product_images():
       productId = 10, image_url="https://i.ebayimg.com/images/g/1gkAAOSwWhVhdFDn/s-l1200.jpg")
    pic40 = ProductImage(
       productId = 10, image_url="https://assets.epicurious.com/photos/57bb33d406de447f4e6d9343/master/pass/cuban-coffee-em-cafecito-em.jpg")
+   pic41 = ProductImage(
+      productId = 7, image_url="https://www.cnet.com/a/img/resize/ef6793231464c98cdb3e5e9ffb780405eb2a8427/hub/2021/10/23/80425069-0d3e-4c67-9085-a66e6177fc60/macbook-pro-2021-cnet-review-12.jpg?auto=webp&fit=crop&height=362&width=644")
 
    db.session.add(pic1)
    db.session.add(pic2)
@@ -125,6 +127,7 @@ def seed_product_images():
    db.session.add(pic38)
    db.session.add(pic39)
    db.session.add(pic40)
+   db.session.add(pic41)
    db.session.commit()
 
 def undo_product_images():

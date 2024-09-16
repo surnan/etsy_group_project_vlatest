@@ -8,7 +8,7 @@ export default function ProductRating({reviews, productRating}) {
             {productRating.map((star, index) => (
                 <FaStar key={index} size={14} color={star ? 'gold' : 'gray'} />
             ))}
-            <span>{`(${reviews.length})`}</span>
+            <span>{`(${reviews?.length})`|| "0"}</span>
         </div>
     )
 }

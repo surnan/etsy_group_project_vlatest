@@ -37,7 +37,7 @@ export const getReviewsThunk = (productId) => async (dispatch) => {
 
     if (response.ok) {
         const reviews = await response.json();
-        console.log(reviews)
+        // console.log(reviews)
         dispatch(getReviews(reviews));
         return reviews;
     }
@@ -61,25 +61,25 @@ export const addReviewThunk = (review, productId, userId) => async (dispatch) =>
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "stars":review.stars,
+            "stars": review.stars,
             "review": review.review,
             "productId": productId,
             "userId": userId
         })
     });
 
-    console.log('The response is', response)
+    // console.log('The response is', response)
 
     if (response.ok) {
         const data = await response.json();
-        
+
         dispatch(addReview(data));
         return data;
     }
 };
 
 export const deleteReviewThunk = (reviewId) => async (dispatch) => {
-    
+
     const response = await fetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE'
     });
@@ -90,7 +90,7 @@ export const deleteReviewThunk = (reviewId) => async (dispatch) => {
 };
 
 export const editReviewThunk = (review) => async (dispatch) => {
-    console.log('The edited review is ', review)
+    // console.log('The edited review is ', review)
     const response = await fetch(`/api/reviews/${review.id}`, {
         method: 'PUT',
         headers: {
@@ -108,14 +108,14 @@ export const editReviewThunk = (review) => async (dispatch) => {
 
 
 //Reducer
-const initialState = {allReviews: [], byId: {}};
+const initialState = { allReviews: [], byId: {} };
 
 function reviewReducer(state = initialState, action) {
     let newState;
 
     switch (action.type) {
         case GET_REVIEWS: {
-            console.log('Yayayayayayayayayayay', action.payload)
+            // console.log('Yayayayayayayayayayay', action.payload)
             newState = { ...state };
             newState.allReviews = action.payload;
             for (let review of newState.allReviews) {
@@ -132,44 +132,55 @@ function reviewReducer(state = initialState, action) {
 
         case ADD_REVIEW: {
             newState = { ...state };
-            newState.allReviews = {...action.payload};
+            newState.allReviews = { ...action.payload };
             newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
             return newState;
         }
 
         case EDIT_REVIEW: {
-            newState = { ...state };
-            const reviewId = action.payload.id;
-           
-            const newAllReviews = [];
-            console.log('The state is....... ', newState)
 
-            newAllReviews.push(action.payload);
-               
+            newState = { ...state };
+
+            const reviewId = action.payload.review.id;
+
+            console.log(reviewId, 'is the review id');
+
+            const newAllReviews = [];
+
+            for (let i = 0; i < newState.allReviews.length; i++) {
+                let currentReview = newState.allReviews[i];
+                if (currentReview.id === reviewId) {
+                    newAllReviews.push(action.payload.review);
+                } else {
+                    newAllReviews.push(currentReview);
+                }
+            }
+
+            console.log(newAllReviews, 'is the new all reviews array');
+
             newState.allReviews = newAllReviews;
-            console.log('All Reviews is', newState.allReviews)
-            newState.byId = { ...newState.byId, [reviewId]: action.payload };
+            newState.byId = { ...newState.byId, [reviewId]: action.payload.review };
 
             return newState;
         }
 
         case DELETE_REVIEW: {
-            newState = {...state}
-            console.log('Marilyn has a ', newState, 'lamb')
-      
+            newState = { ...state }
+            // console.log('Marilyn has a ', newState, 'lamb')
+
             let reviewId = action.payload;
 
-            console.log(newState);
-      
+            // console.log(newState);
+
             const newAllReviewsArr = newState.allReviews.filter(rev => {
-               return rev.id !== reviewId;
+                return rev.id !== reviewId;
             })
-      
+
             newState.allReviews = newAllReviewsArr;
             delete newState.byId[reviewId];
             return newState;
-          }
-          
+        }
+
         default: {
             return state;
         }

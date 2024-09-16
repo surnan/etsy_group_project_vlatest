@@ -7,6 +7,8 @@ import { FaStar } from "react-icons/fa";
 // import {getProductsOneThunk} from '../../redux/review';
 // console.log('Thunk ', editReviewThunk)
 import './AddReviewModal.css';
+
+
 const UpdateReview = () => {
 
     const dispatch = useDispatch();
@@ -14,7 +16,7 @@ const UpdateReview = () => {
     let review = useSelector(state => state.review.currentReview)
     // let editedRevs = useSelector(state => state.review.newllReviews[reviewId]);
 
-    console.log(review);
+    // console.log(review);
     reviewId = parseInt(reviewId);
     const [prodId, setProdId] = useState(review?.productId);
     const [stars, setStars] = useState(review?.stars)
@@ -26,16 +28,13 @@ const UpdateReview = () => {
         dispatch(getReviewThunk(reviewId))
 
             .then((data) => {
-                console.log('Data ', data)
+                // console.log('Data ', data)
                 setStars(data.stars)
                 setRating(data.rating)
                 setProdId(data.productId)
-
-
-            }
-            )
-    }, [reviewId])
-    console.log('Yayayayayayay ', review, prodId)
+            })
+    }, [dispatch, reviewId])
+    // console.log('Yayayayayayay ', review, prodId)
 
 
 
@@ -81,7 +80,8 @@ const UpdateReview = () => {
                         })}
                     </div>
                     <label>Stars</label>
-                    <input value={rating} onChange={(e) => setRating(e.target.value)} placeholder={`${rating}`} type="text" ></input>
+                    <textarea value={rating} onChange={(e) => setRating(e.target.value)}></textarea>
+                    {/* <input value={rating} onChange={(e) => setRating(e.target.value)} type="text" ></input> */}
                     {/* <input  onChange={(e) => setStars(e.target.value)} value = {stars}  placeholder = {`${stars}`}  type = "decimal"/> */}
                 </fieldset>
                 <button type='submit'>Update the Review</button>

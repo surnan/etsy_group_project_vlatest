@@ -2,7 +2,7 @@ import './ProductCard.css';
 import ProductRating from "./ProductRating";
 
 export function getProductStarRating(reviews) {
-    if (reviews.length === 0) {
+    if (!reviews || reviews.length === 0) {
         return [0, 0, 0, 0, 0];
     }
     let total = 0;
@@ -23,10 +23,10 @@ export function getProductStarRating(reviews) {
 }
 
 function ProductCard({ product }) {
-    const productImage = product.product_images.length ? product.product_images[0]?.image_url : 'https://i0.wp.com/mikeyarce.com/wp-content/uploads/2021/09/woocommerce-placeholder.png?ssl=1';
-    const productRating = getProductStarRating(product.reviews);
+    const productImage = product.product_images?.length ? product.product_images[0]?.image_url : 'https://i0.wp.com/mikeyarce.com/wp-content/uploads/2021/09/woocommerce-placeholder.png?ssl=1';
+    const productRating = getProductStarRating(product.reviews || null);
 
-    console.log(productRating, 'productRating');
+    // console.log(productRating, 'productRating');
 
     return (
         <div className="ProductCard">
@@ -37,7 +37,7 @@ function ProductCard({ product }) {
                 <div className="ProductCard__content__title">
                     <h3>{product.name}</h3>
                 </div>
-                <ProductRating reviews={product.reviews} productRating={productRating} />
+                <ProductRating reviews={product.reviews || null} productRating={productRating} />
                 <div className="ProductCard__content__price">
                     <p>${product.price}</p>
                 </div>

@@ -39,11 +39,9 @@ function LoginFormModal() {
     return dispatch(sessionActions.thunkLogin({ email: credential, password: password }))
       .then(closeModal)
       .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.message) {
-          setErrors(data);
-        }
-      })
+          // Set the error message for invalid credentials
+          setErrors({ invalidCredential: 'Invalid email or password' });
+      });
   };
 
   const demoSubmit = (e) => {
@@ -57,8 +55,8 @@ function LoginFormModal() {
     <div className='login-container'>
       <form onSubmit={handleSubmit} className='login-form'>
         <h1>Log In</h1>
-        {errors.message && (
-          <p className='error-message'>{errors.message}</p>
+        {(errors.email || errors.password || errors.invalidCredential) && (
+            <p className='error-message'>{errors.invalidCredential}</p>
         )}
         <div className='login-items'>
           <label id='userName-field'>
