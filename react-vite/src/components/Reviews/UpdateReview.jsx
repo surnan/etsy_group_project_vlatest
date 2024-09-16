@@ -24,7 +24,7 @@ const UpdateReview = () => {
             "review": rating,
             stars
         }
-        console.log(form);
+        // console.log(form);
         const reviewId = form.id;
         dispatch(editReviewThunk(form).then(navigate('/')));
     }

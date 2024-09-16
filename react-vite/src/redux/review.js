@@ -37,7 +37,7 @@ export const getReviewsThunk = (productId) => async (dispatch) => {
 
     if (response.ok) {
         const reviews = await response.json();
-        console.log(reviews)
+        // console.log(reviews)
         dispatch(getReviews(reviews));
     }
 };

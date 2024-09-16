@@ -71,7 +71,7 @@ export const addProductThunk = (product) => async (dispatch) => {
 
     const data = await response.json();
 
-    console.log(data, 'data');
+    // console.log(data, 'data');
 
     if (response.ok) {
         await insertProductImages({ productId: data.id, imageURLs: images });
@@ -99,7 +99,7 @@ export const getProductsAllThunk = () => async (dispatch) => {
     try {
         const response = await fetch('/api/products/');
 
-        console.log(response);
+        // console.log(response);
 
         if (!response.ok) {
             throw new Error('Failed to fetch products');
@@ -127,7 +127,7 @@ export const getProductsAllThunk = () => async (dispatch) => {
         //     product.reviews = reviews;
         // }
 
-        console.log(data, 'data');
+        // console.log(data, 'data');
         dispatch(loadProductsAll(data));
         return data;
 

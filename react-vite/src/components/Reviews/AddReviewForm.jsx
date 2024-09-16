@@ -27,8 +27,8 @@ const AddReviewForm = ({product})=> {
            stars,
            review
         }
-        console.log(form);
-        console.log(product.id);
+        // console.log(form);
+        // console.log(product.id);
         const productId = product.id
       
         dispatch(addReviewThunk(form, productId)).then(navigate('/'));
